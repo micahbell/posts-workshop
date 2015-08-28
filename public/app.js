@@ -1,9 +1,5 @@
 var app = angular.module('posts-workshop', ['ngRoute']);
 
-app.controller('ApplicationController', function($scope) {
-  $scope.color = 'Blue';
-});
-
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider
@@ -12,3 +8,15 @@ app.config(['$routeProvider',
         controller: 'ApplicationController'
       });
   }]);
+
+app.controller('ApplicationController', function($scope) {
+  $scope.color = 'Blue';
+});
+
+app.controller('PostsController', function($scope, $http) {
+  $scope.getPosts = function() {
+    $http.get('/api/posts').then(function(posts) {
+      $scope.posts = posts.data;
+    })
+  };
+});
